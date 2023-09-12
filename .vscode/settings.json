@@ -1,0 +1,9 @@
+{
+    "C_Cpp.errorSquiggles": "disabled",
+    "files.associations": {
+        "stdio.h": "c",
+        "funkctions.h": "c",
+        "pthread.h": "c",
+        "functions.h": "c"
+    }
+}

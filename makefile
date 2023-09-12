@@ -9,15 +9,35 @@ else
 	CFLAGS = $(CLANG_FLAGS)
 endif
 
-GCC_FLAGS = -std=c99 -lm -Wall -Wextra
-CLANG_FLAGS = -std=c99 -lm -Weverything
+GCC_FLAGS = -std=c99 -lm -Wall -Wextra -lpthread
+CLANG_FLAGS = -std=c99 -lm -Weverything -lpthread
 
-#all
-all: main.c
-	@echo "Compilating application"
-	@$(CC) main.c $(CFLAGS) -o main
+#rooster
+rooster: main.c functions_source/analyzer.c functions_source/printer.c functions_source/reader.c functions_source/watchdog.c functions_source/logger.c
+	@echo "Compilating final application"
+	@$(CC) main.c functions_source/analyzer.c functions_source/printer.c functions_source/reader.c functions_source/watchdog.c functions_source/logger.c $(CFLAGS) -o rooster
 
-#cleaning
+#subrooster
+subrooster: main.c functions_source/analyzer.c functions_source/printer.c functions_source/reader.c
+	@echo "Compilating subfinal application"
+	@$(CC) main.c functions_source/analyzer.c functions_source/printer.c functions_source/reader.c $(CFLAGS) -o subrooster
+
+#simple
+simple: main.c functions_source/analyzer.c functions_source/printer.c functions_source/reader.c
+	@echo "Compilating simple application"
+	@$(CC) main.c functions_source/analyzer.c functions_source/printer.c functions_source/reader.c -std=c99 -lpthread -o simple
+
+#debug
+debug: main.c functions_source/analyzer.c functions_source/printer.c functions_source/reader.c
+	@echo "Compilating debug application"
+	@$(CC) main.c functions_source/analyzer.c functions_source/printer.c functions_source/reader.c -g -lpthread -o simple
+
+#test
+test: test.c functions_source/analyzer.c functions_source/printer.c functions_source/reader.c
+	@echo "Compilating test"
+	@$(CC) test.c functions_source/analyzer.c functions_source/printer.c functions_source/reader.c -lpthread -o test
+
+#clean
 clean:
 	@echo "Cleaning"
-	rm -f main
+	rm -f rooster subrooster debug simple test
