@@ -37,4 +37,5 @@ void *reader(){
 
     fclose(pFile);
     sem_post(&sem_a);
+    alive_r = true;
 };

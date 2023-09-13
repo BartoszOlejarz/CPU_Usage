@@ -4,6 +4,7 @@
         "stdio.h": "c",
         "funkctions.h": "c",
         "pthread.h": "c",
-        "functions.h": "c"
+        "functions.h": "c",
+        "unistd.h": "c"
     }
 }

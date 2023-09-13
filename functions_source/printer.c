@@ -15,4 +15,6 @@ void *printer(){
     printf("\n------------------------------");
 
     sem_post(&sem_r);
+    
+    alive_p = true;           
 };

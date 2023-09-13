@@ -19,4 +19,5 @@ void *analyzer(){
     }
 
     sem_post(&sem_p);
+    alive_a = true;
 };
