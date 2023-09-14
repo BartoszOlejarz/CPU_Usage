@@ -5,6 +5,7 @@
         "funkctions.h": "c",
         "pthread.h": "c",
         "functions.h": "c",
-        "unistd.h": "c"
+        "unistd.h": "c",
+        "system_error": "c"
     }
 }

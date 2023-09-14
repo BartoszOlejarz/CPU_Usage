@@ -3,6 +3,7 @@
 #include <semaphore.h>
 #include <pthread.h>
 #include <unistd.h>
+#include <sys/stat.h>
 
 #include "functions.h"
 
@@ -14,15 +15,19 @@ pthread_t thread_r;
 pthread_t thread_a;
 pthread_t thread_p;
 pthread_t thread_w;
+pthread_t thread_l;
 
-bool watchdog_flag;
+bool terminate_flag;
 bool alive_r;
 bool alive_a;
 bool alive_p;
 
+const char *message;
+
 void t_reader();
 void t_analyzerAndPrinter();
 void t_watchdog();
+void t_logger();
 
 int main(){
     sem_init(&sem_r,0,1);
@@ -32,6 +37,7 @@ int main(){
     t_reader();
     t_analyzerAndPrinter();
     t_watchdog();
+    t_logger();
 
     sem_destroy(&sem_r);
     sem_destroy(&sem_a);
@@ -48,7 +54,7 @@ void t_reader(){
         assert(cpu_user[i]);
         assert(cpu_sum[i]);
     }
-    printf("\n reader.c - PASS");
+    printf("\nreader.c - PASS");
 }
 
 void t_analyzerAndPrinter(){
@@ -58,51 +64,69 @@ void t_analyzerAndPrinter(){
     for(int i=0; i<16; i++){
         assert(cpu_proc[i]);
     }
-    printf("\n analyzer and printer.c - PASS");
+    printf("\nanalyzer and printer.c - PASS");
 }  
 
 void t_watchdog(){
     alive_r = false;
     alive_a = true;
     alive_r = true;
-    watchdog_flag = false;
+    terminate_flag = false;
 
     pthread_create(&thread_w, NULL, watchdog, NULL); 
     sleep(2);
 
-    assert(watchdog_flag == true);
+    assert(terminate_flag == true);
     pthread_join(thread_w, NULL);
 
     alive_r = true;
     alive_a = false;
-    watchdog_flag = false;
+    terminate_flag = false;
 
     pthread_create(&thread_w, NULL, watchdog, NULL); 
     sleep(2);
 
-    assert(watchdog_flag == true);
+    assert(terminate_flag == true);
     pthread_join(thread_w, NULL);
 
     alive_a = true;
     alive_r = false;
-    watchdog_flag = false;
+    terminate_flag = false;
 
     pthread_create(&thread_w, NULL, watchdog, NULL); 
     sleep(2);
 
-    assert(watchdog_flag == true);
+    assert(terminate_flag == true);
     pthread_join(thread_w, NULL);
 
     alive_r = true;
     alive_a = true;
     alive_r = true;
-    watchdog_flag = true;
+    terminate_flag = true;
 
     pthread_create(&thread_w, NULL, watchdog, NULL); 
     sleep(2);
 
-    assert(watchdog_flag == true);
+    assert(terminate_flag == true);
     pthread_join(thread_w, NULL);
 
-    printf("\n watchdog.c - PASS");
+    printf("\nwatchdog.c - PASS");
+}
+
+void t_logger(){
+    struct stat log_before;
+    struct stat log_after;
+    stat("log.txt", &log_before);
+
+    message = "Logger test --- PASS!";
+
+    pthread_create(&thread_l, NULL, logger, NULL);
+    pthread_join(thread_l, NULL);
+
+    stat("log.txt", &log_after);
+    if (log_after.st_size > log_before.st_size){
+        printf("\nlogger.c - PASS");
+    } else {
+        printf("\nlogger.c - FAIL");
+    }
 }

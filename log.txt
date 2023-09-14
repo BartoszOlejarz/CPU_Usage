@@ -1,0 +1,6 @@
+<2023-09-13 23:08:58> :: watchdog.c - Printer found dead!
+<13-09-2023 23:15:06> :: watchdog.c - Printer found dead!
+<13-09-2023 23:16:35> :: printer.c - cpu_proc array found empty!
+<14-09-2023 10:41:07> :: watchdog.c - Reader found dead!
+<14-09-2023 11:11:30> :: Logger test --- PASS!
+<14-09-2023 11:21:23> :: Logger test --- PASS!

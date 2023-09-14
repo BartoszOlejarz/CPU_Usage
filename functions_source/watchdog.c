@@ -11,17 +11,20 @@ void *watchdog(){
 
         if(!alive_r){
             printf("\nReader found dead!");
-            watchdog_flag = true;
+            message = "watchdog.c - Reader found dead!";
+            terminate_flag = true;
             pthread_exit(NULL);
         } else if (!alive_a){
             printf("\nAnalyzer found dead!");
-            watchdog_flag = true;
+            message = "watchdog.c - Analyzer found dead!";
+            terminate_flag = true;
             pthread_exit(NULL);
         } else if (!alive_p){
             printf("\nPrinter found dead!");
-            watchdog_flag = true;
+            message = "watchdog.c - Printer found dead!";
+            terminate_flag = true;
             pthread_exit(NULL);
-        } else if (watchdog_flag == true){
+        } else if (terminate_flag == true){
            pthread_exit(NULL);
         }
         sleep(1);

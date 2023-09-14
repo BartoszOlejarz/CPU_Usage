@@ -7,6 +7,11 @@
 
 void *printer(){
     sem_wait(&sem_p);
+    
+    if(cpu_proc[0] == 0.0){
+        message = "printer.c - cpu_proc array found empty!";
+        terminate_flag = true;
+    }
 
     printf("\n------------------------------");
     for(int i = 0; i < 16 ; i++){

@@ -17,25 +17,20 @@ rooster: main.c functions_source/analyzer.c functions_source/printer.c functions
 	@echo "Compilating final application"
 	@$(CC) main.c functions_source/analyzer.c functions_source/printer.c functions_source/reader.c functions_source/watchdog.c functions_source/logger.c $(CFLAGS) -o rooster
 
-#subrooster
-subrooster: main.c functions_source/analyzer.c functions_source/printer.c functions_source/reader.c functions_source/watchdog.c
-	@echo "Compilating subfinal application"
-	@$(CC) main.c functions_source/analyzer.c functions_source/printer.c functions_source/reader.c $(CFLAGS) -o subrooster
-
 #simple
-simple: main.c functions_source/analyzer.c functions_source/printer.c functions_source/reader.c functions_source/watchdog.c
+simple: main.c functions_source/analyzer.c functions_source/printer.c functions_source/reader.c functions_source/watchdog.c functions_source/logger.c
 	@echo "Compilating simple application"
-	@$(CC) main.c functions_source/analyzer.c functions_source/printer.c functions_source/reader.c functions_source/watchdog.c -std=c99 -lpthread -o simple
+	@$(CC) main.c functions_source/analyzer.c functions_source/printer.c functions_source/reader.c functions_source/watchdog.c functions_source/logger.c -std=c99 -lpthread -o simple
 
 #debug
-debug: main.c functions_source/analyzer.c functions_source/printer.c functions_source/reader.c functions_source/watchdog.c
+debug: main.c functions_source/analyzer.c functions_source/printer.c functions_source/reader.c functions_source/watchdog.c functions_source/logger.c
 	@echo "Compilating debug application"
-	@$(CC) main.c functions_source/analyzer.c functions_source/printer.c functions_source/reader.c functions_source/watchdog.c -g -lpthread -o simple
+	@$(CC) main.c functions_source/analyzer.c functions_source/printer.c functions_source/reader.c functions_source/watchdog.c functions_source/logger.c -g -lpthread -o simple
 
 #test
-test: test.c functions_source/analyzer.c functions_source/printer.c functions_source/reader.c functions_source/watchdog.c
+test: test.c functions_source/analyzer.c functions_source/printer.c functions_source/reader.c functions_source/watchdog.c functions_source/logger.c
 	@echo "Compilating test"
-	@$(CC) test.c functions_source/analyzer.c functions_source/printer.c functions_source/reader.c functions_source/watchdog.c -lpthread -o test
+	@$(CC) test.c functions_source/analyzer.c functions_source/printer.c functions_source/reader.c functions_source/watchdog.c functions_source/logger.c -lpthread -o test
 
 #clean
 clean:

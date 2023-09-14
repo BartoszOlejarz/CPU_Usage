@@ -11,12 +11,20 @@ int cpu_sum[16];
 
 void *reader(){
     sem_wait(&sem_r);
+
     char buffer[255];
 
     FILE *pFile;
     pFile = fopen("/proc/stat", "r");
-    fgets(buffer, sizeof(buffer), pFile); //discarding 1st line of /proc/stat
 
+    if(pFile == NULL){
+        message = "reader.c - Can't open /proc/stat or found empty!";
+        fclose(pFile);
+        terminate_flag = true;
+    } 
+
+    fgets(buffer, sizeof(buffer), pFile); //discarding 1st line of /proc/stat
+    
     for(int i = 0; i < 16; i++){
         cpu_user[i] = 0;
         cpu_sum[i] = 0;
