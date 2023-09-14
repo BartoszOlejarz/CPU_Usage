@@ -30,7 +30,7 @@ debug: main.c functions_source/analyzer.c functions_source/printer.c functions_s
 #test
 test: test.c functions_source/analyzer.c functions_source/printer.c functions_source/reader.c functions_source/watchdog.c functions_source/logger.c
 	@echo "Compilating test"
-	@$(CC) test.c functions_source/analyzer.c functions_source/printer.c functions_source/reader.c functions_source/watchdog.c functions_source/logger.c -lpthread -o test
+	@$(CC) test.c functions_source/analyzer.c functions_source/printer.c functions_source/reader.c functions_source/watchdog.c functions_source/logger.c $(CFLAGS) -o test
 
 #clean
 clean:
